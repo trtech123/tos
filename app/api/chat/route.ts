@@ -16,6 +16,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get current date
+    const today = new Date()
+    const currentDate = today.toISOString().split('T')[0] // YYYY-MM-DD format
+    const hebrewDate = today.toLocaleDateString('he-IL', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      weekday: 'long'
+    })
+
     // Create a chat completion with ChatGPT
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini', // or 'gpt-4o' for more advanced responses
@@ -30,6 +40,11 @@ export async function POST(request: NextRequest) {
 - מידע על חברות תעופה
 - עזרה בהזמנות
 השתמש בשפה פשוטה וברורה, והיה תמיד מועיל ומקצועי.
+
+מידע חשוב - התאריך של היום:
+- תאריך נוכחי: ${currentDate} (${hebrewDate})
+- השתמש בתאריך הזה כדי לחשב תאריכי טיסה עתיديים
+- אם משתמש אומר "בשבוע הבא", "בחודש הבא", וכו' - חשב יחסית לתאריך הנוכחי
 
 כל הטיסות יוצאות מנמל התעופה בן גוריון בתל אביב (TLV).
 
